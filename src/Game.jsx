@@ -1,4 +1,6 @@
 import { useState, useEffect } from "react"
+import { VscDebugRestart } from "react-icons/vsc";
+
 
 function Game() {
 
@@ -16,7 +18,8 @@ function Game() {
     const [turn, setTurn] = useState("X")
     const [array, setArray] = useState([...new Array(9)])
     const [winner, setWinner] = useState(null)
-    const [draw, setDraw] = useState(false)
+    const [draw, setDraw] = useState(false);
+    const [winnerArray,setWinnerArray] = useState([-1,-1,-1]);
 
     function toggleTurn() {
         turn === "X" ? setTurn("O") : setTurn("X")
@@ -28,17 +31,17 @@ function Game() {
         setArray(copiedArray)
     }
 
-    function isGameOver(){
-        for(let element of array){
-            if(!element)
+    function isGameOver() {
+        for (let element of array) {
+            if (!element)
                 return false
-        } 
+        }
         return true
     }
 
     function handleClick(e) {
         let index = e.target.value;
-        if(array[index] || winner) return;
+        if (array[index] || winner) return;
         pushToArray(index);
         toggleTurn()
     }
@@ -49,17 +52,17 @@ function Game() {
         setTurn("X");
         setWinner(null)
         setDraw(false)
+        setWinnerArray([-1,-1,-1])
     }
 
     function checkWinner() {
         console.log("Checking winner")
         winCombinations.map((element) => {
-            console.log(element)
             const [i1, i2, i3] = element;
             if (array[i1]) {
                 if (array[i1] === array[i2] && array[i1] === array[i3]) {
-                    console.log("Condition Passed", array[i1])
                     setWinner(array[i1])
+                    setWinnerArray(element)
                 }
             }
         })
@@ -67,22 +70,30 @@ function Game() {
 
     useEffect(() => {
         checkWinner();
-        if( isGameOver() && !winner) setDraw(true)
+        if (isGameOver() && !winner) setDraw(true)
     }, [array])
-    
 
     return (
         <div className="wrapper">
+
+            <div className="info">
+                <p>
+                    {
+                        winner ? `The winner is" ${winner}"!`
+                            : draw ? `Game ended as a tie!` : `The next turn is "${turn}"`
+                    }
+                </p>
+                <span className="restart" onClick={handleRestart}><VscDebugRestart /></span>
+            </div>
+
             <div className="grid">
                 {
-                    array.map((_, index) => <button onClick={handleClick} value={index} key={index}>{array[index]}</button>)
+                    array.map((_, index) => <button className={`cell ${array[index] ? array[index] === "X" ? "X" : "O" : null} 
+                    ${index === winnerArray[0] || index === winnerArray[1] || index === winnerArray[2] ? "win" : null }`}
+                        onClick={handleClick} value={index} key={index}>{array[index]}</button>)
                 }
             </div>
-            <div className="controls">
-                <p>{winner ? `The winner is ${winner}! Please Restart.` 
-                : draw ? `Draw, Game Over! Please Restart.` : `The next turn is ${turn}` }</p>
-                <button onClick={handleRestart}>Restart</button>
-            </div>
+
         </div>
     );
 

@@ -1,25 +1,128 @@
-*{
+* {
   margin: 0;
   padding: 0;
 }
 
-body{
-  height:100vh;
+:root {
+  --color1: #e0e1dd;
+  --color2: #22333b;
+  --color3: green;
+  --color4: red ;
+  --color5:#0d1b2a;
+}
+
+html {
+  overflow-x: hidden;
+  overflow-y: hidden;
+}
+
+.wrapper {
+  min-height: 100vh;
+  max-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background-color: var(--color1);
+  gap: 2rem;
+}
+
+.grid {
+  display: grid;
+  border: 2px solid var(--color2);
+  grid-template-columns: 1fr 1fr 1fr;
+  box-shadow: 0 4px 12px var(--color2);
+}
+
+.cell {
+  min-width: 25vw;
+  max-width: 25vw;
+  aspect-ratio: 1/1;
+  border: 1px solid var(--color2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--color1);
+  color: var(--color2);
+  font-size: clamp(0.5rem, 7vw, 1.5rem);
+  font-weight: bold;
+  font-family: Georgia, 'Times New Roman', Times, serif;
+}
+
+.info {
+  color: var(--color5);
+  font-size: clamp(0.5rem, 6vw, 1.5rem);
+  font-weight: bold;
+  display: flex;
+  gap: 2rem;
+}
+
+.restart{
+  min-height: 2rem;
+  max-height: 2rem;
+  min-width: 2rem;
+  max-width: 2rem;
+  color:var(--color1);
+  background-color: var(--color2);
   display: flex;
   justify-content: center;
   align-items: center;
+  border-radius: 50%;
 }
 
-.grid{
-  display: grid;
-  border: 2px solid black;
-  grid-template-columns: 1fr 1fr 1fr;
+.win{
+  animation: fade 1s infinite;
 }
 
-.grid > button{
-  width: 10rem;
-  height: 10rem;
-  text-align: center;
-  line-height: 10rem;
-  border: 1px solid black;
+.X {
+  color: var(--color3);
+}
+
+.O {
+  color: var(--color4);
+}
+
+@keyframes fade{
+  0% {
+    font-size: clamp(0.5rem, 7vw, 1.5rem);
+    opacity: 1;
+  }
+  25% {
+    font-size: clamp(0.5rem, 7vw, 1.5rem);
+    opacity: 1;
+  }
+  50% {
+    font-size: larger;
+    opacity: 0.8;
+  }
+  75% {
+    font-size: clamp(0.5rem, 7vw, 1.5rem);
+    opacity: 1;
+  }
+  100% {
+    font-size: clamp(0.5rem, 7vw, 1.5rem);
+    opacity: 1;
+  }
+}
+
+@media (min-width:400px) and (orientation:landscape){
+  .cell {
+    min-width: 12.5vw;
+    max-width: 12.5vw;
+  }
+}
+
+@media (min-width:800px){
+  .cell {
+    min-width: 10vw;
+    max-width: 10vw;
+  }
+}
+
+
+@media (min-width:1024px){
+  .cell {
+    min-width: 10vw;
+    max-width: 10vw;
+  }
 }
