@@ -19,7 +19,7 @@ function Game() {
     const [array, setArray] = useState([...new Array(9)])
     const [winner, setWinner] = useState(null)
     const [draw, setDraw] = useState(false);
-    const [winnerArray,setWinnerArray] = useState([-1,-1,-1]);
+    const [winnerArray, setWinnerArray] = useState([-1, -1, -1]);
 
     function toggleTurn() {
         turn === "X" ? setTurn("O") : setTurn("X")
@@ -52,7 +52,7 @@ function Game() {
         setTurn("X");
         setWinner(null)
         setDraw(false)
-        setWinnerArray([-1,-1,-1])
+        setWinnerArray([-1, -1, -1])
     }
 
     function checkWinner() {
@@ -89,7 +89,7 @@ function Game() {
             <div className="grid">
                 {
                     array.map((_, index) => <button className={`cell ${array[index] ? array[index] === "X" ? "X" : "O" : null} 
-                    ${index === winnerArray[0] || index === winnerArray[1] || index === winnerArray[2] ? "win" : null }`}
+                    ${index === winnerArray[0] || index === winnerArray[1] || index === winnerArray[2] ? "win" : null}`}
                         onClick={handleClick} value={index} key={index}>{array[index]}</button>)
                 }
             </div>
